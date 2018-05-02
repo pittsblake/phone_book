@@ -18,6 +18,12 @@ class Api::ContactsController < ApplicationController
         render json: @new_contact
     end
 
+    def update 
+        @contact = current_user.contacts.find(params[:id])
+        @contact.update!(contact_params)
+        render json: @contact
+    end
+
     def destroy 
         current_user.contacts.find(params[:id]).destroy
 
