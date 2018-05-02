@@ -37,7 +37,9 @@ class AllContacts extends Component {
                 <button onClick={this.toggleContactForm}>+</button>
 
                 {
-                    this.state.showNewContactForm ? <ContactFormPage /> : null
+                    this.state.showNewContactForm ? <ContactFormPage toggleContactForm = {this.toggleContactForm}
+                    getAllContacts = {this.getAllContacts}
+                    /> : null
                 }
 
                 {
