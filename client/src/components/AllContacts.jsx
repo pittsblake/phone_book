@@ -28,6 +28,8 @@ class AllContacts extends Component {
     render() {
         return (
             <div>
+            
+
                 {
                     this.state.contacts.map((people, i) => {
                         return (

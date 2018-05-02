@@ -11,6 +11,12 @@ class Api::ContactsController < ApplicationController
         render json: @contact
     end
 
+    def create 
+        @new_contact = current_user.contacts.new(contact_params)
+        @new_contact.save!
+
+        render json: @new_contact
+    end
 
     def destroy 
         current_user.contacts.find(params[:id]).destroy
@@ -19,5 +25,9 @@ class Api::ContactsController < ApplicationController
             msg: "Contact Deleted"
         }
     end
-    
+
+    private 
+    def contact_params
+        params.require(:contact).permit(:name, :number, :email, :category)
+    end
 end
