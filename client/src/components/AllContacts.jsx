@@ -20,6 +20,11 @@ class AllContacts extends Component {
         })
     }
 
+    deleteContact = async (contactId) => {
+        await axios.delete(`/api/contacts/${contactId}`)
+        this.getAllContacts()
+    }
+
     render() {
         return (
             <div>
@@ -28,6 +33,7 @@ class AllContacts extends Component {
                         return (
                             <div key={i}>
                                 <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
+                                <button onClick={()=>{this.deleteContact(people.id)}}>Delete</button>
                             </div>
                         )
                     })
