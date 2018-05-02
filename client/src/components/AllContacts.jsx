@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-
+import ContactFormPage from './ContactFormPage'
 
 class AllContacts extends Component {
     state = {
         contacts: [],
+        showNewContactForm: false
     }
 
     async componentWillMount(){
@@ -25,10 +26,19 @@ class AllContacts extends Component {
         this.getAllContacts()
     }
 
+    toggleContactForm = () => {
+        this.setState({showNewContactForm: !this.state.showNewContactForm})
+    }
+
     render() {
         return (
             <div>
-            
+                
+                <button onClick={this.toggleContactForm}>+</button>
+
+                {
+                    this.state.showNewContactForm ? <ContactFormPage /> : null
+                }
 
                 {
                     this.state.contacts.map((people, i) => {
