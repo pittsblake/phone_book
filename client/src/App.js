@@ -1,21 +1,118 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
+import {clearAuthTokens, saveAuthTokens, setAxiosDefaults, userIsLoggedIn} from "./util/SessionHeaderUtil";
+import SignUpLogIn from './components/SignUpLogIn'
+import axios from 'axios';
+import AllContacts from './components/AllContacts';
+import ContactShowPage from './components/ContactShowPage';
+
 
 class App extends Component {
+
+  state = {
+      signedIn: false,
+  }
+
+  async componentDidMount() {
+    try {
+      const signedIn = userIsLoggedIn()
+      
+      if (signedIn) {
+        setAxiosDefaults()
+      }
+
+      this.setState({
+        signedIn
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+
+  signUp = async (email, password, password_confirmation) => {
+    try {
+      const payload = {
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation
+      }
+      const response = await axios.post('/auth', payload)
+      saveAuthTokens(response.headers)
+
+      this.setState({
+        signedIn: true,
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  signIn = async (email, password) => {
+    try {
+      const payload = {
+        email,
+        password
+      }
+      const response = await axios.post('/auth/sign_in', payload)
+      saveAuthTokens(response.headers)
+
+      this.setState({
+        signedIn: true,
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  signOut = async (event) => {
+    try {
+      event.preventDefault()
+
+      await axios.delete('/auth/sign_out')
+
+      clearAuthTokens();
+
+      this.setState({ signedIn: false })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+
+      const SignUpLogInComponent = () => {
+          return <SignUpLogIn
+              signUp={this.signUp}
+              signIn={this.signIn}/>
+      }
+
+      const AllContactsComponent = () => {
+        return <AllContacts />
+    }
+
+      const SingeContactComponent = (props) => {
+          return <ContactShowPage {...props}/>
+      }
+
+      return (
+          <Router>
+              <div>
+              <button onClick={this.signOut}>Sign Out</button>
+                  <Switch>
+                      <Route exact path="/signUp" render={SignUpLogInComponent}/>
+                      <Route exact path="/contacts" render={AllContactsComponent}/>
+                      <Route exact path="/contacts/:id" render={SingeContactComponent} />
+                  </Switch>
+
+                  {this.state.signedIn ? <Redirect to="/contacts"/> : <Redirect to="/signUp"/>}
+              </div>
+          </Router>
+      )
   }
 }
 
-export default App;
+export default App
