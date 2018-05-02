@@ -12,3 +12,5 @@ blake = User.create({name: 'Blake', email: 'blake@gmail.com', password: 'blahbla
 
 
 jon = Contact.create({name: 'Jon', email:'jon@mail.com', number: '7702895114', category: 'personal', user_id: blake.id})
+
+mom = Contact.create({name: 'Jon', email:'jon@mail.com', number: '4047358706', category: 'personal', user_id: blake.id})

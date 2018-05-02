@@ -10,4 +10,14 @@ class Api::ContactsController < ApplicationController
         @contact = current_user.contacts.find(params[:id])
         render json: @contact
     end
+
+
+    def destroy 
+        current_user.contacts.find(params[:id]).destroy
+
+        render json: {
+            msg: "Contact Deleted"
+        }
+    end
+    
 end
