@@ -5,6 +5,7 @@ import SignUpLogIn from './components/SignUpLogIn'
 import axios from 'axios';
 import AllContacts from './components/AllContacts';
 import ContactShowPage from './components/ContactShowPage';
+import styled from 'styled-components'
 
 
 class App extends Component {
@@ -100,8 +101,10 @@ class App extends Component {
 
       return (
           <Router>
-              <div>
-              <button onClick={this.signOut}>Sign Out</button>
+              <AppContainer>
+                <NavBar>
+                  <button onClick={this.signOut}>Sign Out</button>
+                </NavBar>
                   <Switch>
                       <Route exact path="/signUp" render={SignUpLogInComponent}/>
                       <Route exact path="/contacts" render={AllContactsComponent}/>
@@ -109,10 +112,19 @@ class App extends Component {
                   </Switch>
 
                   {this.state.signedIn ? <Redirect to="/contacts"/> : <Redirect to="/signUp"/>}
-              </div>
+              </AppContainer>
           </Router>
       )
   }
 }
 
 export default App
+
+const AppContainer = styled.div`
+  height: 100vh
+`
+
+const NavBar = styled.div`
+  height: 10%;
+  width: 100vw;
+`

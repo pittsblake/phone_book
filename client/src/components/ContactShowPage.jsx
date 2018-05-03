@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import EditContact from './EditContact'
+import {Link} from 'react-router-dom'
 
 class ContactShowPage extends Component {
     state = {
@@ -48,6 +49,7 @@ class ContactShowPage extends Component {
     render() {
         return (
             <div>
+                <Link to='/contacts'>All Contacts</Link>
                 <button onClick={this.toggleEditForm}>Edit</button>
 
                 {
