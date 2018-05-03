@@ -6,7 +6,8 @@ import ContactFormPage from './ContactFormPage'
 class AllContacts extends Component {
     state = {
         contacts: [],
-        showNewContactForm: false
+        showNewContactForm: false,
+        search: '',
     }
 
     async componentWillMount(){
@@ -30,9 +31,20 @@ class AllContacts extends Component {
         this.setState({showNewContactForm: !this.state.showNewContactForm})
     }
 
+    updateSearch = (event) => {
+        this.setState({search: event.target.value.substr(0,15)})
+    }
+
     render() {
+        let filteredContacts = this.state.contacts.filter((contact) => {
+            return contact.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        })
+
         return (
             <div>
+                <input type="text" value={this.state.search}
+                    onChange={this.updateSearch}
+                />
                 
                 <button onClick={this.toggleContactForm}>+</button>
 
@@ -43,7 +55,7 @@ class AllContacts extends Component {
                 }
 
                 {
-                    this.state.contacts.map((people, i) => {
+                    filteredContacts.map((people, i) => {
                         return (
                             <div key={i}>
                                 <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
