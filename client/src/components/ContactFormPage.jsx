@@ -26,8 +26,8 @@ class ContactFormPage extends Component {
             contact: this.state.contact
         }
         const res = await axios.post('/api/contacts', payload)
-        this.props.toggleContactForm()
         this.props.getAllContacts()
+        this.props.toggleContactForm()
     }
 
     render() {
