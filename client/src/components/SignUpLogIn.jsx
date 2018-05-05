@@ -64,56 +64,58 @@ class SignUpLogIn extends Component {
             <MainContainer>
 
 
-                <Card>
 
 
 
-                    {
-                        this.state.showSignUpForm ?
-                            <div>
 
-                                <button onClick={this.toggleLogInForm}>Sign In</button>
+                {
+                    this.state.showSignUpForm ?
+                        <Card>
+                            <CardHeader>
+                                <h1>Sign up</h1>
+                            </CardHeader>
+                            <FormContainer>
 
-                                <form>
-                                    <div>
-                                        <label htmlFor="email">E-mail: </label>
-                                        <input onChange={this.handleChange} type="text" name="email" value={this.state.email} />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="password">Password: </label>
-                                        <input onChange={this.handleChange} type="password" name="password" value={this.state.password} />
-                                    </div>
+                                <form className="column">
+                                    <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="Email" />
 
-                                    <div>
-                                        <label htmlFor="password_confirmation">Confirm Password: </label>
-                                        <input onChange={this.handleChange} type="password" name="password_confirmation"
-                                            value={this.state.password_confirmation} />
-                                    </div>
+                                    <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="Password" />
 
+                                    <input onChange={this.handleChange} type="password" name="password_confirmation"
+                                        value={this.state.password_confirmation} placeholder="Confirm Password" />
 
-                                    <button onClick={this.signUp}>Submit</button>
+                                    <CardButton onClick={this.signUp}>Submit</CardButton>
 
                                 </form>
-                            </div>
-                            :
-                            <div>
-                                <button onClick={this.toggleLogInForm}>Not a Member? Sign Up</button>
-                                <form>
-                                    <div>
-                                        <label htmlFor="email">E-mail: </label>
-                                        <input onChange={this.handleChange} type="text" name="email" value={this.state.email} />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="password">Password: </label>
-                                        <input onChange={this.handleChange} type="password" name="password" value={this.state.password} />
-                                    </div>
+                                <div className="row-center">
+                                    <p>Already a member?</p>
+                                    <a href='#' onClick={this.toggleLogInForm}>Sign In</a>
+                                </div>
+                            </FormContainer>
+                        </Card>
+                        :
+                        <Card>
+                            <CardHeader>
+                                <h1>Log In</h1>
+                            </CardHeader>
+
+                            <FormContainer>
+                                <form className="column">
+                                    <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="Email" />
+
+                                    <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="Password" />
 
 
-                                    <button onClick={this.signIn}>Submit</button>
+                                    <CardButton onClick={this.signIn}>Log in</CardButton>
                                 </form>
-                            </div>
-                    }
-                </Card>
+                                <div className="row-center">
+                                    <p>Not a member?</p>
+                                    <a href='#' onClick={this.toggleLogInForm}> Sign Up</a>
+                                </div>
+                            </FormContainer>
+                        </Card>
+                }
+
             </MainContainer>
         )
     }
@@ -131,11 +133,52 @@ const MainContainer = styled.div`
 
 const Card = styled.div`
     background-color: cyan;
-    border-radius: 14px;
-    height: 40vh;
+    height: 50vh;
     width: 30vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    
+    p{
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    a{
+        font-size: 13px;
+    }
+
+`
+
+const CardHeader = styled.div`  
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 20%;
+`
+
+const CardButton = styled.button`
+    width: 75%;
+    display: block;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    border: 0px;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1); 
+    background-color: #4d90fe; 
+
+    &&:hover{
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+    }
+`
+
+const FormContainer = styled.div`
+    width: 90%;
 `

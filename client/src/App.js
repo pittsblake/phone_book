@@ -103,7 +103,10 @@ class App extends Component {
           <Router>
               <AppContainer>
                 <NavBar>
-                  <button onClick={this.signOut}>Sign Out</button>
+                  {
+                    this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button> : null
+                  }
+                  
                 </NavBar>
                   <Switch>
                       <Route exact path="/signUp" render={SignUpLogInComponent}/>
