@@ -92,24 +92,20 @@ class App extends Component {
       }
 
       const AllContactsComponent = () => {
-        return <AllContacts />
+        return <AllContacts 
+        signIn={this.signIn}
+        signOut={this.signOut}
+        />
     }
 
       const SingeContactComponent = (props) => {
-          return <ContactShowPage {...props}/>
+          return <ContactShowPage {...props} signIn={this.signIn} signOut={this.signOut}/>
       }
 
       return (
           <Router>
               <AppContainer>
-                
-                  {
-                    this.state.signedIn ? 
-                    <NavBar><button onClick={this.signOut}>Sign Out</button> </NavBar> 
-                    : null
-                  }
-                  
-                
+
                   <Switch>
                       <Route exact path="/signUp" render={SignUpLogInComponent}/>
                       <Route exact path="/contacts" render={AllContactsComponent}/>

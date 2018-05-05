@@ -64,58 +64,59 @@ class SignUpLogIn extends Component {
             <MainContainer>
 
 
+                <InnerContainer className="column">
+                    <Title>Digits</Title>
+                    <p className="tagline"> A place to keep connections</p>
 
 
+                    {
+                        this.state.showSignUpForm ?
+                            <Card>
+                                <CardHeader>
+                                    <h1>Sign up</h1>
+                                </CardHeader>
+                                <FormContainer>
+
+                                    <form className="column">
+                                        <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="Email" />
+
+                                        <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="Password" />
+
+                                        <input onChange={this.handleChange} type="password" name="password_confirmation"
+                                            value={this.state.password_confirmation} placeholder="Confirm Password" />
+
+                                        <CardButton onClick={this.signUp}>Submit</CardButton>
+
+                                    </form>
+                                    <div className="row-center">
+                                        <p>Already a member?</p>
+                                        <a href='#' onClick={this.toggleLogInForm}>Sign In</a>
+                                    </div>
+                                </FormContainer>
+                            </Card>
+                            :
+                            <Card>
+                                <CardHeader>
+                                    <h1>Log In</h1>
+                                </CardHeader>
+
+                                <FormContainer>
+                                    <form className="column">
+                                        <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="Email" />
+
+                                        <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="Password" />
 
 
-                {
-                    this.state.showSignUpForm ?
-                        <Card>
-                            <CardHeader>
-                                <h1>Sign up</h1>
-                            </CardHeader>
-                            <FormContainer>
-
-                                <form className="column">
-                                    <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="Email" />
-
-                                    <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="Password" />
-
-                                    <input onChange={this.handleChange} type="password" name="password_confirmation"
-                                        value={this.state.password_confirmation} placeholder="Confirm Password" />
-
-                                    <CardButton onClick={this.signUp}>Submit</CardButton>
-
-                                </form>
-                                <div className="row-center">
-                                    <p>Already a member?</p>
-                                    <a href='#' onClick={this.toggleLogInForm}>Sign In</a>
-                                </div>
-                            </FormContainer>
-                        </Card>
-                        :
-                        <Card>
-                            <CardHeader>
-                                <h1>Log In</h1>
-                            </CardHeader>
-
-                            <FormContainer>
-                                <form className="column">
-                                    <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="Email" />
-
-                                    <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="Password" />
-
-
-                                    <CardButton onClick={this.signIn}>Log in</CardButton>
-                                </form>
-                                <div className="row-center">
-                                    <p>Not a member?</p>
-                                    <a href='#' onClick={this.toggleLogInForm}> Sign Up</a>
-                                </div>
-                            </FormContainer>
-                        </Card>
-                }
-
+                                        <CardButton onClick={this.signIn}>Log in</CardButton>
+                                    </form>
+                                    <div className="row-center">
+                                        <p>Not a member?</p>
+                                        <a href='#' onClick={this.toggleLogInForm}> Sign Up</a>
+                                    </div>
+                                </FormContainer>
+                            </Card>
+                    }
+                </InnerContainer>
             </MainContainer>
         )
     }
@@ -124,15 +125,30 @@ class SignUpLogIn extends Component {
 export default SignUpLogIn
 
 const MainContainer = styled.div`
-    height: 90%;
+    height: 100%;
     width: 100vw;
     display: flex;
-    justify-content: center;
-    align-items: center
+    justify-content: flex-end;
+    align-items: center;
+    background-image: url("https://i.imgur.com/Gsvja0f.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 
+`
+
+const InnerContainer = styled.div`
+    margin-right: 10vw;
+`
+
+const Title = styled.h1`
+    font-size: 4em;
+    margin-bottom: 0px;
+    font-family: 'Jura', sans-serif;
+    
 `
 
 const Card = styled.div`
-    background-color: cyan;
+    background-color: #c9e5e5;
     height: 50vh;
     width: 30vw;
     display: flex;
