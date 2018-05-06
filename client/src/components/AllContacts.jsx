@@ -142,7 +142,18 @@ class AllContacts extends Component {
                                                 <Contact key={i}>
                                                     <i class="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
                                                     <a href='#' onClick={() => this.openModalForContact(people.id)}> <h1>{people.name}</h1> </a>
+                                                    <Modal
+                                                        isOpen={this.state.modalIsOpen}
+                                                        onAfterOpen={this.afterOpenModal}
+                                                        onRequestClose={this.closeModal}
+                                                        style={customStyles}
+                                                        contentLabel="Example Modal" >
+                                                        {
+                                                            this.state.modalIsOpen ? <ContactShowPage getContact={this.getContact} id ={people.id} /> : null
+                                                        }
+                                                    </Modal>
                                                 </Contact>
+
                                             )
                                         }) : null
                                 }
@@ -160,16 +171,7 @@ class AllContacts extends Component {
                                 }) : null}
                             </EveryContacts>
 
-                            <Modal
-                                isOpen={this.state.modalIsOpen}
-                                onAfterOpen={this.afterOpenModal}
-                                onRequestClose={this.closeModal}
-                                style={customStyles}
-                                contentLabel="Example Modal" >
-                                {
-                                    this.state.modalIsOpen ? <ContactShowPage getContact={this.getContact}/> : null
-                                }
-                            </Modal>
+
                         </div>
                     </Body>
                 </Content>

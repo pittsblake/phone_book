@@ -11,8 +11,16 @@ class ContactShowPage extends Component {
     }
 
     componentDidMount() {
-        this.props.getContact()
-    }
+        this.getContact()
+     }
+ 
+     getContact = async () => {
+         const contactId = this.props.id
+         const res = await axios.get(`/api/contacts/${contactId}`)
+         this.setState({
+             contact: res.data
+         })
+     }
 
     toggleEditForm = () => {
         this.setState({showEditForm: !this.state.showEditForm})
@@ -26,7 +34,7 @@ class ContactShowPage extends Component {
     }
 
     handleSubmit = async (event) => {
-        const contactId = this.props.match.params.id
+        const contactId = this.props.id
         event.preventDefault();
         //event.target.reset();
         const payload = {
