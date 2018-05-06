@@ -155,7 +155,7 @@ const NavBar = styled.div`
 `
 
 const Category = styled.div`
-    margin-top: 12vh;
+    margin-top: 10vh;
     height: 8vh;
 
 `

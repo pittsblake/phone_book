@@ -59,7 +59,7 @@ class ContactFormPage extends Component {
                         <option value="work">Work</option>
                         <option value="family">Family</option>
                     </select>
-                    <button>Submit</button>
+                    <FormButton>Submit</FormButton>
                 </ActualForm>
             </FormContainer>
         );
@@ -79,6 +79,27 @@ const ActualForm = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+`
+
+const FormButton = styled.button`
+    width: 70%;
+    display: block;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    border: 0px;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1); 
+    background-color: #4d90fe; 
+
+    &&:hover{
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+    }
 `
 
 const ContactInput = styled.input`
