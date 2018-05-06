@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import Modal from 'react-modal';
 import ContactFormPage from './ContactFormPage'
 import PersonalContacts from './sortedContacts/PersonalContacts'
 import WorkContacts from './sortedContacts/WorkContacts'
 import FamilyContacts from './sortedContacts/FamilyContacts'
-import Nav from './Nav'
+import Nav from './Nav';
+import ContactShowPage from './ContactShowPage';
+
 
 class AllContacts extends Component {
     state = {
@@ -16,11 +19,19 @@ class AllContacts extends Component {
         showAllContacts: true,
         showPersonalContacts: false,
         showWorkContacts: false,
-        showFamilyContacts: false
+        showFamilyContacts: false,
+        modalIsOpen: false
     }
 
     async componentWillMount() {
         await this.getAllContacts()
+    }
+
+    openModal = () => {
+        this.setState({ modalIsOpen: true });
+    }
+    closeModal = () => {
+        this.setState({ modalIsOpen: false });
     }
 
     getAllContacts = async () => {
@@ -80,6 +91,19 @@ class AllContacts extends Component {
         })
     }
 
+    getContact = async (id) => {
+        //const contactId = this.props.match.params.id
+        const res = await axios.get(`/api/contacts/${id}`)
+        this.setState({
+            contact: res.data
+        })
+    }
+
+    openModalForContact = (id) => {
+        this.getContact(id)
+        this.openModal();
+    }
+
     render() {
         let filteredContacts = this.state.contacts.filter((contact) => {
             return contact.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
@@ -103,38 +127,49 @@ class AllContacts extends Component {
                             getAllContacts={this.getAllContacts}
                         />
                         <div>
-                        <Category className="row-center">
-                            <Options href="#" onClick={this.toggleAllContacts}>All</Options >
-                            <Options href="#" onClick={this.togglePersonalContacts}>Personal</Options >
-                            <Options href="#" onClick={this.toggleShowWorkContacts}>Work</Options >
-                            <Options href="#" onClick={this.toggleShowFamilyContacts}>Family</Options >
-                        </Category>
-                        <EveryContacts>
+                            <Category className="row-center">
+                                <Options href="#" onClick={this.toggleAllContacts}>All</Options >
+                                <Options href="#" onClick={this.togglePersonalContacts}>Personal</Options >
+                                <Options href="#" onClick={this.toggleShowWorkContacts}>Work</Options >
+                                <Options href="#" onClick={this.toggleShowFamilyContacts}>Family</Options >
+                            </Category>
+                            <EveryContacts>
 
-                            {
-                                this.state.showAllContacts || this.state.showPersonalContacts == false && this.state.showWorkContacts == false && this.state.showFamilyContacts == false ?
-                                    filteredContacts.map((people, i) => {
-                                        return (
-                                            <Contact key={i}>
-                                                <i class="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
-                                                <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
-                                            </Contact>
-                                        )
-                                    }) : null
-                            }
+                                {
+                                    this.state.showAllContacts || this.state.showPersonalContacts == false && this.state.showWorkContacts == false && this.state.showFamilyContacts == false ?
+                                        filteredContacts.map((people, i) => {
+                                            return (
+                                                <Contact key={i}>
+                                                    <i class="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
+                                                    <a href='#' onClick={() => this.openModalForContact(people.id)}> <h1>{people.name}</h1> </a>
+                                                </Contact>
+                                            )
+                                        }) : null
+                                }
 
-                            {this.state.showPersonalContacts ? filteredContacts.map((contact) => {
-                                return <PersonalContacts contact={contact} deleteContact={this.deleteContact} />
-                            }) : null}
+                                {this.state.showPersonalContacts ? filteredContacts.map((contact) => {
+                                    return <PersonalContacts contact={contact} deleteContact={this.deleteContact} />
+                                }) : null}
 
-                            {this.state.showWorkContacts ? filteredContacts.map((contact) => {
-                                return <WorkContacts contact={contact} deleteContact={this.deleteContact} />
-                            }) : null}
+                                {this.state.showWorkContacts ? filteredContacts.map((contact) => {
+                                    return <WorkContacts contact={contact} deleteContact={this.deleteContact} />
+                                }) : null}
 
-                            {this.state.showFamilyContacts ? filteredContacts.map((contact) => {
-                                return <FamilyContacts contact={contact} deleteContact={this.deleteContact} />
-                            }) : null}
-                        </EveryContacts>
+                                {this.state.showFamilyContacts ? filteredContacts.map((contact) => {
+                                    return <FamilyContacts contact={contact} deleteContact={this.deleteContact} />
+                                }) : null}
+                            </EveryContacts>
+
+                            <Modal
+                                isOpen={this.state.modalIsOpen}
+                                onAfterOpen={this.afterOpenModal}
+                                onRequestClose={this.closeModal}
+                                style={customStyles}
+                                contentLabel="Example Modal" >
+                                {
+                                    this.state.modalIsOpen ? <ContactShowPage getContact={this.getContact}/> : null
+                                }
+                            </Modal>
                         </div>
                     </Body>
                 </Content>
@@ -208,3 +243,14 @@ const FormContainer = styled.div`
     justify-content: center;
     align-items: center;
 `
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
