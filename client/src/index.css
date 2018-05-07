@@ -96,3 +96,8 @@ input:hover {
 .contact{
   width: 60%
 }
+
+.bold {
+  font-size: 28px;
+  height: 10vh;
+}

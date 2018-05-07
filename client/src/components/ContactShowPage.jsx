@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import EditContact from './EditContact'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 class ContactShowPage extends Component {
     state = {
@@ -10,7 +11,7 @@ class ContactShowPage extends Component {
     }
 
     componentDidMount() {
-       this.getContact()
+        this.getContact()
     }
 
     getContact = async () => {
@@ -22,14 +23,14 @@ class ContactShowPage extends Component {
     }
 
     toggleEditForm = () => {
-        this.setState({showEditForm: !this.state.showEditForm})
+        this.setState({ showEditForm: !this.state.showEditForm })
     }
 
     handleChange = (event) => {
-        const attribute = event.target.name 
-        const updateContact = {...this.state.contact}
-        updateContact[attribute] = event.target.value 
-        this.setState({ contact: updateContact})
+        const attribute = event.target.name
+        const updateContact = { ...this.state.contact }
+        updateContact[attribute] = event.target.value
+        this.setState({ contact: updateContact })
     }
 
     handleSubmit = async (event) => {
@@ -41,27 +42,30 @@ class ContactShowPage extends Component {
         }
 
         const res = await axios.patch(`/api/contacts/${contactId}`, payload)
-        this.setState({contact: res.data})
+        this.setState({ contact: res.data })
         this.getContact();
         this.toggleEditForm();
     }
 
     render() {
         return (
-            <div>
-                <Link to='/contacts'>All Contacts</Link>
-                <button onClick={this.toggleEditForm}>Edit</button>
+            <Container>
+                <Nav>
+                    <Link to='/contacts'>All Contacts</Link>
+                    <a href='#' onClick={this.props.signOut}>Sign Out</a>
+                </Nav>
+                <EditButton onClick={this.toggleEditForm}>Edit</EditButton>
 
                 {
-                    this.state.showEditForm ? <EditContact contact={this.state.contact} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/> : null
+                    this.state.showEditForm ? <EditContact contact={this.state.contact} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> : null
                 }
 
                 <table>
                     <tr>
-                        <td>Name</td>
-                        <td>Phone Number</td>
-                        <td>Email</td>
-                        <td>Type</td>
+                        <td className="bold">Name</td>
+                        <td className="bold">Phone Number</td>
+                        <td className="bold">Email</td>
+                        <td className="bold">Type</td>
                     </tr>
                     <tr>
                         <td>{this.state.contact.name}</td>
@@ -70,9 +74,53 @@ class ContactShowPage extends Component {
                         <td>{this.state.contact.category}</td>
                     </tr>
                 </table>
-            </div>
+            </Container>
         );
     }
 }
 
 export default ContactShowPage;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    table {
+        width: 65%;
+    }
+
+    tr {
+        text-align: center;
+    }
+`
+const EditButton = styled.button`
+    width: 20%;
+    display: block;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    border: 0px;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1); 
+    background-color: green; 
+    &&:hover{
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+    }
+`
+
+const Nav = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    height: 10vh;
+
+    a {
+        margin-left: 12px;
+    }
+`
