@@ -7,8 +7,8 @@ const PersonalContacts = (props) => {
         <div className="contact">
             {
                 props.contact.category === 'personal' ? 
-                <Contact>
-                    <i class="fas fa-trash" onClick={() => { props.deleteContact(props.contact.id) }}></i>
+                <Contact key={props.contact.id}>
+                    <i className="fas fa-trash" onClick={() => { props.deleteContact(props.contact.id) }}></i>
                     <Link to={`/contacts/${props.contact.id}`}><h1>{props.contact.name}</h1></Link>
                 </Contact>: null
             }

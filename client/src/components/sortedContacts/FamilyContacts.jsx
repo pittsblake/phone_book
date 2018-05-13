@@ -8,7 +8,7 @@ const FamilyContacts = (props) => {
             {
                 props.contact.category === 'family' ? 
                 <Contact>
-                     <i class="fas fa-trash" onClick={() => { props.deleteContact(props.contact.id) }}></i>
+                     <i className="fas fa-trash" onClick={() => { props.deleteContact(props.contact.id) }}></i>
                     <Link to={`/contacts/${props.contact.id}`}><h1>{props.contact.name}</h1></Link>
                 </Contact>: null
             }

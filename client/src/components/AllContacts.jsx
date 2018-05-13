@@ -116,7 +116,7 @@ class AllContacts extends Component {
                                     filteredContacts.map((people, i) => {
                                         return (
                                             <Contact key={i}>
-                                                <i class="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
+                                                <i className="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
                                                 <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
                                             </Contact>
                                         )
@@ -124,15 +124,15 @@ class AllContacts extends Component {
                             }
 
                             {this.state.showPersonalContacts ? filteredContacts.map((contact) => {
-                                return <PersonalContacts contact={contact} deleteContact={this.deleteContact} />
+                                return <PersonalContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
                             }) : null}
 
                             {this.state.showWorkContacts ? filteredContacts.map((contact) => {
-                                return <WorkContacts contact={contact} deleteContact={this.deleteContact} />
+                                return <WorkContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
                             }) : null}
 
                             {this.state.showFamilyContacts ? filteredContacts.map((contact) => {
-                                return <FamilyContacts contact={contact} deleteContact={this.deleteContact} />
+                                return <FamilyContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
                             }) : null}
                         </EveryContacts>
                         </div>
