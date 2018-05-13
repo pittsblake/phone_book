@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+
+// This tells axios to save the headers to local storage and use them in the next request
 export function saveAuthTokens(headers) {
     // Set Axios Headers with Auth tokens for the next request.
     axios.defaults.headers['access-token'] = headers['access-token']
@@ -15,6 +17,8 @@ export function saveAuthTokens(headers) {
 }
 
 
+
+// Checks local storage to see if there is stored data already to see if someone was        // already signedIn. This helps to not be logged out if the page refreshes.
 export function userIsLoggedIn() {
 
     const userLoggedIn = (
@@ -28,7 +32,7 @@ export function userIsLoggedIn() {
 }
 
 
-
+// The second function will tell axios to use the existing session data from the last User // so that we don't have to sign in again:
 export function setAxiosDefaults() {
     axios.defaults.headers['access-token'] = localStorage.getItem("access-token");
     axios.defaults.headers.client = localStorage.getItem("client");
@@ -37,6 +41,8 @@ export function setAxiosDefaults() {
 }
 
 
+
+// For logging out, clear local storage
 export function clearAuthTokens() {
     localStorage.removeItem('access-token')
     localStorage.removeItem('client')
