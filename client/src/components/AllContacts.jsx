@@ -13,6 +13,7 @@ class AllContacts extends Component {
         contacts: [],
         showNewContactForm: false,
         search: '',
+        category: 'all',
         showAllContacts: true,
         showPersonalContacts: false,
         showWorkContacts: false,
@@ -53,12 +54,9 @@ class AllContacts extends Component {
         })
     }
 
-    togglePersonalContacts = () => {
+    togglePersonalContacts = (event) => {
         this.setState({
-            showPersonalContacts: !this.state.showPersonalContacts,
-            showAllContacts: false,
-            showWorkContacts: false,
-            showFamilyContacts: false
+            category: event.target.value
         })
     }
 
@@ -105,38 +103,58 @@ class AllContacts extends Component {
                             getAllContacts={this.getAllContacts}
                         />
                         <div>
-                        <Category className="row-center">
-                            <Options href="#" onClick={this.toggleAllContacts}>All</Options >
-                            <Options href="#" onClick={this.togglePersonalContacts}>Personal</Options >
-                            <Options href="#" onClick={this.toggleShowWorkContacts}>Work</Options >
-                            <Options href="#" onClick={this.toggleShowFamilyContacts}>Family</Options >
-                        </Category>
-                        <EveryContacts>
+                            <Category className="row-center">
+                                <Options value='all' onClick={this.togglePersonalContacts}>All</Options >
+                                <Options value='personal' onClick={this.togglePersonalContacts}>Personal</Options >
+                                <Options value='work' onClick={this.togglePersonalContacts}>Work</Options >
+                                <Options value='family' onClick={this.togglePersonalContacts}>Family</Options >
+                            </Category>
+                            <EveryContacts>
 
-                            {
-                                this.state.showAllContacts || this.state.showPersonalContacts == false && this.state.showWorkContacts == false && this.state.showFamilyContacts == false ?
-                                    filteredContacts.map((people, i) => {
+
+                                {
+                                    this.state.category === 'all' ? filteredContacts.map((people, i) => {
                                         return (
                                             <Contact key={i}>
                                                 <i className="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
                                                 <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
                                             </Contact>
                                         )
-                                    }) : null
-                            }
+                                    }) : filteredContacts.map((people, i) => {
+                                        if(this.state.category === people.category)
+                                        return (
+                                            <Contact key={i}>
+                                                <i className="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
+                                                <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
+                                            </Contact>
+                                        )
+                                    }) 
+                                }
 
-                            {this.state.showPersonalContacts ? filteredContacts.map((contact) => {
-                                return <PersonalContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
-                            }) : null}
+                                {/* {
+                                    this.state.showAllContacts || this.state.showPersonalContacts == false && this.state.showWorkContacts == false && this.state.showFamilyContacts == false ?
+                                        filteredContacts.map((people, i) => {
+                                            return (
+                                                <Contact key={i}>
+                                                    <i className="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
+                                                    <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
+                                                </Contact>
+                                            )
+                                        }) : null
+                                } */}
 
-                            {this.state.showWorkContacts ? filteredContacts.map((contact) => {
-                                return <WorkContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
-                            }) : null}
+                                {/* {this.state.showPersonalContacts ? filteredContacts.map((contact) => {
+                                    return <PersonalContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
+                                }) : null}
 
-                            {this.state.showFamilyContacts ? filteredContacts.map((contact) => {
-                                return <FamilyContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
-                            }) : null}
-                        </EveryContacts>
+                                {this.state.showWorkContacts ? filteredContacts.map((contact) => {
+                                    return <WorkContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
+                                }) : null}
+
+                                {this.state.showFamilyContacts ? filteredContacts.map((contact) => {
+                                    return <FamilyContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
+                                }) : null} */}
+                            </EveryContacts>
                         </div>
                     </Body>
                 </Content>
@@ -162,7 +180,7 @@ const Category = styled.div`
 
 `
 
-const Options = styled.a`
+const Options = styled.button`
     margin-right: 3em;
     text-decoration: none;
     font-size: 30px;
