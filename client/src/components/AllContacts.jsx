@@ -45,38 +45,13 @@ class AllContacts extends Component {
         this.setState({ search: event.target.value.substr(0, 15) })
     }
 
-    toggleAllContacts = (event) => {
-        this.setState({
-            showPersonalContacts: false,
-            showAllContacts: !this.state.showAllContacts,
-            showWorkContacts: false,
-            showFamilyContacts: false
-        })
-    }
 
-    togglePersonalContacts = (event) => {
+    toggleCategory = (event) => {
         this.setState({
             category: event.target.value
         })
     }
 
-    toggleShowWorkContacts = () => {
-        this.setState({
-            showPersonalContacts: false,
-            showAllContacts: false,
-            showWorkContacts: !this.state.showWorkContacts,
-            showFamilyContacts: false
-        })
-    }
-
-    toggleShowFamilyContacts = () => {
-        this.setState({
-            showPersonalContacts: false,
-            showAllContacts: false,
-            showWorkContacts: false,
-            showFamilyContacts: !this.state.showFamilyContacts
-        })
-    }
 
     render() {
         let filteredContacts = this.state.contacts.filter((contact) => {
@@ -104,10 +79,10 @@ class AllContacts extends Component {
                         />
                         <div>
                             <Category className="row-center">
-                                <Options value='all' onClick={this.togglePersonalContacts}>All</Options >
-                                <Options value='personal' onClick={this.togglePersonalContacts}>Personal</Options >
-                                <Options value='work' onClick={this.togglePersonalContacts}>Work</Options >
-                                <Options value='family' onClick={this.togglePersonalContacts}>Family</Options >
+                                <Options value='all' onClick={this.toggleCategory}>All</Options >
+                                <Options value='personal' onClick={this.toggleCategory}>Personal</Options >
+                                <Options value='work' onClick={this.toggleCategory}>Work</Options >
+                                <Options value='family' onClick={this.toggleCategory}>Family</Options >
                             </Category>
                             <EveryContacts>
 
@@ -120,40 +95,18 @@ class AllContacts extends Component {
                                                 <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
                                             </Contact>
                                         )
-                                    }) : filteredContacts.map((people, i) => {
-                                        if(this.state.category === people.category)
-                                        return (
-                                            <Contact key={i}>
-                                                <i className="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
-                                                <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
-                                            </Contact>
-                                        )
-                                    }) 
-                                }
-
-                                {/* {
-                                    this.state.showAllContacts || this.state.showPersonalContacts == false && this.state.showWorkContacts == false && this.state.showFamilyContacts == false ?
-                                        filteredContacts.map((people, i) => {
+                                    })
+                                    :
+                                    filteredContacts.map((people, i) => {
+                                        if (this.state.category === people.category)
                                             return (
                                                 <Contact key={i}>
                                                     <i className="fas fa-trash" onClick={() => { this.deleteContact(people.id) }}></i>
                                                     <Link to={`/contacts/${people.id}`}> <h1>{people.name}</h1> </Link>
                                                 </Contact>
                                             )
-                                        }) : null
-                                } */}
-
-                                {/* {this.state.showPersonalContacts ? filteredContacts.map((contact) => {
-                                    return <PersonalContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
-                                }) : null}
-
-                                {this.state.showWorkContacts ? filteredContacts.map((contact) => {
-                                    return <WorkContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
-                                }) : null}
-
-                                {this.state.showFamilyContacts ? filteredContacts.map((contact) => {
-                                    return <FamilyContacts key={contact.id} contact={contact} deleteContact={this.deleteContact} />
-                                }) : null} */}
+                                    })
+                                }
                             </EveryContacts>
                         </div>
                     </Body>
