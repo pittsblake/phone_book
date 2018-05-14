@@ -37,24 +37,18 @@ class SignUpLogIn extends Component {
         this.setState(newState)
     }
 
-    // toggleSignUpForm = () => {
-    //     this.setState({ 
-    //         showSignUpForm: true,
-    //         signIn: 'SignIn'
-    //     })
-    // }
 
     toggleLogInForm = () => {
         if (this.state.showSignUpForm) {
             this.setState({
                 showSignUpForm: !this.state.showSignUpForm,
-                // signIn: 'Sign Up'
+            
             })
         }
         else if (this.state.showSignUpForm == false) {
             this.setState({
                 showSignUpForm: !this.state.showSignUpForm,
-                // signIn: 'Sign In'
+               
             })
         }
     }

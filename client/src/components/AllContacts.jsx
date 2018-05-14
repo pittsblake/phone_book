@@ -85,6 +85,8 @@ class AllContacts extends Component {
             return contact.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         })
 
+        console.log('Filtered Contacts', filteredContacts)
+
         return (
             <div>
                 <NavBar>
