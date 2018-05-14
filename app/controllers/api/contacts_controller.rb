@@ -2,8 +2,8 @@ class Api::ContactsController < ApplicationController
     before_action :authenticate_user!
 
     def index
-        @contacts = current_user.contacts.all 
-        render json: @contacts
+        @contacts = current_user.contacts.all
+        render json: @contacts.order(:name)
     end
 
     def show    

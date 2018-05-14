@@ -70,8 +70,6 @@ class AllContacts extends Component {
                 </NavBar>
 
                 <Content>
-
-
                     <Body>
                         <ContactFormPage
                             toggleContactForm={this.toggleContactForm}
@@ -137,7 +135,10 @@ const Options = styled.button`
     margin-right: 3em;
     text-decoration: none;
     font-size: 30px;
-    color: black
+    color: black;
+    text-decoration: none;
+    background: none;
+    border: none;
 
     &&:hover{
         border-bottom: 1px solid black
